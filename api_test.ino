@@ -9,8 +9,8 @@ long duration; // variable for the duration of sound wave travel
 int distance; // variable for the distance measurement
 
 
-char ssid[] = "****";        // your network SSID (name)
-char pass[] = "****";    // your network password 
+char ssid[] = "****";        // your network SSID (network name)
+char pass[] = "****";        // your network password 
 int keyIndex = 0;
 
 int status = WL_IDLE_STATUS;
