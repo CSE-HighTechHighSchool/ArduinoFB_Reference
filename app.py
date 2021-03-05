@@ -1,8 +1,13 @@
-from flask import Flask
+# Install flask:  python -m pip install flask
+from flask import Flask   
 from flask import request
+
+# Install Pyrebase
+# For Win10:  python -m pip install pyrebase4
+# For Mac:  python3 -m pip install pyrebase
 import pyrebase
 
-# Configuration credentials (can be found in Firebase console)
+# Configuration credentials (can be found in Firebase console) - replace asterisks with your db info
 config = {
   "apiKey": "****",
   "authDomain": "****-test.firebaseapp.com",
@@ -24,7 +29,9 @@ def home():
     # Take parameters from Artuino request
     args = request.args
 
-    #  Set the disance parameter in firebase to the collected ultrasonic distance from Arduino
+    #  Set the distance parameter in firebase to the collected ultrasonic distance from Arduino
+    #  If using db.set, it's recommended that you use a timestamp for the key parameter 
+    #  You can also use db.push to write data, which will generate a unique key for each value.
     db.set({"distance":str(args['distance'])})
 
     # Give Arduino a success response
