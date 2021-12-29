@@ -152,7 +152,7 @@ void printWifiStatus(){
   Serial.println(" dBm");
 }
 
-// collect distance to object
+// collect distance values
 void range(){
   digitalWrite(trigPin, LOW);         // set trigPin LOW to clear it 
   delayMicroseconds(2);               // 2 microsecond delay
