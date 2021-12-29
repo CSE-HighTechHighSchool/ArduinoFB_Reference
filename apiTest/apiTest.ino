@@ -14,10 +14,10 @@ Instructions:
      and password on the "arduino_secrets.h" tab (these are case sensitive). DO NOT change lines 34 & 35.
  2.  Update Line 49 with the IP address for the computer running the Flask server.
      Note the use of commas in the IP address format:  ***,***,***,***
- 3.  Update Line 128 with the same IP address you added to Line 41, except this time
-     use periods between values, not commas (i.e.,  ***.***.***.***)
- 4.  Rename the range() function on line 114 with the function for your circuit
- 5.  Replace the range() function (lines 153 - 161) with your the data collection function for
+ 3.  Update Line 128 with the same IP address you added to Line 49, except this time
+     use periods between groups of digits, not commas (i.e.,  ***.***.***.***)
+ 4.  Rename the range() function on line 117 with the function for your circuit
+ 5.  Replace the range() function (lines 155 - 164) with your the data collection function for
      your circuit.
  6.  Don't change any other lines of code.
  */
