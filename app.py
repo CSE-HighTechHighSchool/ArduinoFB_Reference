@@ -1,13 +1,9 @@
-# Install flask:  python -m pip install flask
-from flask import Flask   
+from flask import Flask
 from flask import request
-
-# Install Pyrebase
-# For Win10:  python -m pip install pyrebase4
-# For Mac:  python3 -m pip install pyrebase
+from datetime import datetime
 import pyrebase
 
-# Configuration credentials (can be found in Firebase console) - replace asterisks with your db info
+# Configuration credentials (can be found in Firebase console)
 config = {
   "apiKey": "****",
   "authDomain": "****-test.firebaseapp.com",
@@ -18,25 +14,46 @@ config = {
 # Initialize firebase connection
 firebase = pyrebase.initialize_app(config)
 
-# Create database object
+# Create database object ("db" represents the root node in the database)
 db = firebase.database()
 
-# Server object
+# Each data set will be stored under its own child node identified by a timestamp
+# The timestamp for the current data set is taken when app.py is executed
+timeStamp = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+
+# Keys for key:value pairs will be integers (converted to strings for FB) 
+# For each data set, keys will start from 0.  "key" variable will be incremented 
+# in home() function.
+key = 0
+
+# Create server object
 app = Flask(__name__)
 @app.route("/")
 
 def home():
-    # Take parameters from Artuino request
-    args = request.args
 
-    #  Set the distance parameter in firebase to the collected ultrasonic distance from Arduino
-    #  If using db.set, it's recommended that you use a timestamp for the key parameter 
-    #  You can also use db.push to write data, which will generate a unique key for each value.
-    db.set({"distance":str(args['distance'])})
-
-    # Give Arduino a success response
-    return "success"
+  # Make variables "key" & "timestamp" accessible within function scope
+  global key
+  global timeStamp
     
-# Run server on local IP address on port 5000
+  # Take parameters from Arduino request & assign value to variable "value"
+  args = request.args
+  value = str(args['distance'])
+
+  #print("key, value: ", key, value)  # For debugging only
+
+  # Update FB (don't use set() - will replace values instead of listing them)
+  # The values for current data set are stored under the child node with the
+  # current timestamp.
+  # Keys should be strings for FB.  Values can be string or numerical datatype
+  db.child(timeStamp).update({str(key):value})
+
+  # Increment key
+  key += 1 
+
+  # Give Arduino a success response
+  return "success"
+    
+# Run server on local IP address on port 5000 
 if __name__ == "__main__":
     app.run(debug=False, host='****', port=5000)
