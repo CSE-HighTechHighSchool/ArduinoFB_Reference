@@ -122,7 +122,8 @@ void httpRequest() {
 
     // send the HTTP GET request with the distance as a parameter.
     // The Flask route to call should be inbetween the "/" and "?" (ex:  GET /test?...
-    // where "test" is the Flask route that will GET the data)
+    // where "test" is the Flask route that will GET the data, "distance" is the key
+    // and the value is provided by:  String(distance))
     String request = "GET /test?distance=" + String(distance) + " HTTP/1.1";
     client.println(request);
 
